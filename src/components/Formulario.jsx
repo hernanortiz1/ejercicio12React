@@ -2,6 +2,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import ListaNoticias from "./ListaNoticias";
 import { useEffect, useState } from "react";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import Swal from "sweetalert2";
 
 const Formulario = () => {
   const [categoria, setCategoria] = useState("");
@@ -9,13 +10,16 @@ const Formulario = () => {
   const [noticia, setNoticia] = useState([]);
   const [mostrarSpinner, setMostrarSpinner] = useState(false);
 
-  useEffect(() => {
-    if (categoria !== "" && pais !== "") {
-      obtenerNoticia();
-    }
-  }, [categoria, pais]);
-
   const obtenerNoticia = async () => {
+    if (pais === "" || categoria === "") {
+      Swal.fire({
+        icon: "error",
+        title: "Seleccione Pais y categoria",
+        text: "Seleccione Pais y categoria, por último buscar",
+      });
+      return;
+    }
+
     try {
       setMostrarSpinner(true);
       const respuesta = await fetch(
@@ -38,7 +42,7 @@ const Formulario = () => {
       <section className="p-3 border rounded-3 bg-white container">
         <Form.Group>
           <Form.Label className="fs-4 d-flex justify-content-center">
-            Seleccione categoria
+            Seleccione categoria y pais
           </Form.Label>
           <div className="d-md-flex align-items-center gap-2">
             <Form.Select
@@ -77,9 +81,19 @@ const Formulario = () => {
               <option value="fr">Francia</option>
               <option value="de">Alemania</option>
             </Form.Select>
+            <div className="mt-3 mt-md-0 text-center">
+              <Button
+                onClick={obtenerNoticia}
+                variant="primary"
+                className="ms-md-2 fs-5 px-3"
+              >
+                Buscar
+              </Button>
+            </div>
           </div>
         </Form.Group>
       </section>
+
       <section className="mt-4">
         {mostrarSpinner ? (
           <div className="my-4 d-flex justify-content-center align-items-center">
