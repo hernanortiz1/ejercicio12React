@@ -5,6 +5,7 @@ import ScaleLoader from "react-spinners/ScaleLoader";
 
 const Formulario = () => {
   const [categoria, setCategoria] = useState("");
+  const [pais, setPais] = useState("");
   const [noticia, setNoticia] = useState([]);
   const [mostrarSpinner, setMostrarSpinner] = useState(false);
 
@@ -39,8 +40,9 @@ const Formulario = () => {
           <Form.Label className="fs-4 d-flex justify-content-center">
             Seleccione categoria
           </Form.Label>
-          <div className="d-flex align-items-center ">
+          <div className="d-md-flex align-items-center">
             <Form.Select
+              className="my-3 text-center"
               required
               value={categoria}
               onChange={(e) => setCategoria(e.target.value)}
@@ -55,6 +57,25 @@ const Formulario = () => {
               <option value="science">Ciencia</option>
               <option value="sports">Deportes</option>
               <option value="technology">Tecnología</option>
+            </Form.Select>
+
+            <Form.Select
+              className="text-center"
+              required
+              value={pais}
+              onChange={(e) => setCategoria(e.target.value)}
+            >
+              <option value="" disabled hidden>
+                Pais
+              </option>
+              <option value="ar">Argentina</option>
+              <option value="us">Estados Unidos</option>
+              <option value="br">Brasil</option>
+              <option value="mx">México</option>
+              <option value="co">Colombia</option>
+              <option value="es">España</option>
+              <option value="fr">Francia</option>
+              <option value="de">Alemania</option>
             </Form.Select>
           </div>
         </Form.Group>
