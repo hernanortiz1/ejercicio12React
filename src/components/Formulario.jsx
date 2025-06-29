@@ -10,16 +10,16 @@ const Formulario = () => {
   const [mostrarSpinner, setMostrarSpinner] = useState(false);
 
   useEffect(() => {
-    if (categoria !== "") {
+    if (categoria !== "" && pais !== "") {
       obtenerNoticia();
     }
-  }, [categoria]);
+  }, [categoria, pais]);
 
   const obtenerNoticia = async () => {
     try {
       setMostrarSpinner(true);
       const respuesta = await fetch(
-        `https://newsdata.io/api/1/news?apikey=pub_b337209814aa4936a8bbd412055a9faf&category=${categoria}&language=es`
+        `https://newsdata.io/api/1/news?apikey=pub_b337209814aa4936a8bbd412055a9faf&category=${categoria}&language=es&country=${pais}`
       );
 
       if (respuesta.status === 200) {
@@ -40,7 +40,7 @@ const Formulario = () => {
           <Form.Label className="fs-4 d-flex justify-content-center">
             Seleccione categoria
           </Form.Label>
-          <div className="d-md-flex align-items-center">
+          <div className="d-md-flex align-items-center gap-2">
             <Form.Select
               className="my-3 text-center"
               required
@@ -63,7 +63,7 @@ const Formulario = () => {
               className="text-center"
               required
               value={pais}
-              onChange={(e) => setCategoria(e.target.value)}
+              onChange={(e) => setPais(e.target.value)}
             >
               <option value="" disabled hidden>
                 Pais
